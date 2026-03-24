@@ -73,10 +73,19 @@ conda run -n ocean-swinlstm python scripts/predict_spatiotemporal_segmentation.p
 conda run -n ocean-swinlstm python scripts/evaluate_spatiotemporal_segmentation.py --split test
 ```
 
+统一 `sh` 启动脚本：
+
+```bash
+sh scripts/run_jtech_pipeline.sh train
+sh scripts/run_jtech_pipeline.sh predict test
+sh scripts/run_jtech_pipeline.sh evaluate test
+sh scripts/run_jtech_pipeline.sh train_eval test
+sh scripts/run_jtech_pipeline.sh full 1993-01-01 2024-12-31 test
+```
+
 实现约定：
 
 - 输入变量：`adt`、`ugos`、`vgos`
 - 输入张量：`[T=3, C=3, H=160, W=320]`
 - 标签定义：`0=background`、`1=cyclonic`、`2=anticyclonic`、`255=ignore(land)`
 - 训练/验证/测试划分与本文档开头保持一致
-

@@ -1,0 +1,3 @@
+[submodule "py-eddy-tracker"]
+	path = py-eddy-tracker
+	url = https://github.com/AntSimi/py-eddy-tracker.git

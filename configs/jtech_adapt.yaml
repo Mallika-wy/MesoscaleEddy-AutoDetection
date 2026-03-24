@@ -1,0 +1,67 @@
+data:
+  raw_dir: data
+  variables:
+    - adt
+    - ugos
+    - vgos
+  seq_len: 3
+  contour_dir: outputs/meta40_dt_contours
+  label_store_dir: outputs/label_store
+  processed_dir: outputs/processed
+  stats_path: outputs/processed/train_stats.json
+  interp_limit_days: 30
+  label_workers: 4
+  ignore_index: 255
+  background_index: 0
+  cyclonic_index: 1
+  anticyclonic_index: 2
+  splits:
+    train:
+      files:
+        - 19930101_20021231.nc
+        - 20030101_20121231.nc
+        - 20130101_20221231.nc
+      start_date: "1993-01-01"
+      end_date: "2022-12-31"
+    test:
+      files:
+        - 20230101_20231231.nc
+      start_date: "2023-01-01"
+      end_date: "2023-12-31"
+    val:
+      files:
+        - 20240101_20241231.nc
+      start_date: "2024-01-01"
+      end_date: "2024-12-31"
+
+model:
+  channels:
+    - 16
+    - 32
+    - 48
+    - 64
+    - 96
+  kernel_size: 3
+  dropout: 0.1
+  num_classes: 3
+
+training:
+  batch_size: 12
+  epochs: 50
+  learning_rate: 0.0001
+  weight_decay: 0.001
+  num_workers: 4
+  grad_accum_steps: 1
+  amp: true
+  early_stopping_patience: 8
+  save_dir: outputs/checkpoints/jtech_adapt
+  seed: 2026
+
+prediction:
+  batch_size: 16
+  num_workers: 2
+  output_dir: outputs/predictions/jtech_adapt
+  checkpoint_path: outputs/checkpoints/jtech_adapt/best.pt
+
+evaluation:
+  output_dir: outputs/metrics/jtech_adapt
